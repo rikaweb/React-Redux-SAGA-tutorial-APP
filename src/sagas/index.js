@@ -1,11 +1,18 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
 
 function* fetchNews() {
-
-  const json = yield fetch('https://newsapi.org/v1/articles?source=cnn&apiKey=c39a26d9c12f48dba2a5c00e35684ecc')
+  const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+  const url = `${proxyUrl}https://api.twitter.com/2/users?ids=4780951812&user.fields=profile_image_url,public_metrics,id,location,url,created_at,description,entities`;
+  const urltrump=`${proxyUrl}https://api.twitter.com/2/tweets/search/recent?query=trump&max_results=10&tweet.fields=text,author_id,public_metrics,created_at,entities,source,withheld`
+  const json = yield fetch(url,{
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':'Bearer AAAAAAAAAAAAAAAAAAAAABxINQEAAAAAv3N1Fx2yrKlLAXrjOs7KjMTPvps%3DptWUkOJLkRED08FkeE4mlMcJzguzWMOX6OtCfD6vmlDlCY5jir'
+    }
+  })
     .then(response => response.json());
 
-  yield put({ type: "NEWS_RECEIVED", json: json.articles || [{ error: json.message }] });
+  yield put({ type: "NEWS_RECEIVED", json: json.data || [{ error: json.message }] });
 }
 
 function* actionWatcher() {

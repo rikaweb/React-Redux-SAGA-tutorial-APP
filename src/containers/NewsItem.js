@@ -8,7 +8,7 @@ const imgStyle = {
   border: '4px solid RebeccaPurple ',
   borderRadius: '5%'
 };
-const articleStyle = {
+const dataStyle = {
   width: '50%',
   margin: '0 auto',
   color: 'olive'
@@ -17,22 +17,24 @@ const errorMessage = {
   color: 'red'
 }
 
-let NewsItem = ({ article }) => (
-  article ?
-    <article style={articleStyle} >
-      {article.error && <h2 style={errorMessage}>{article.error}</h2>}
-      {article.title && <div>
-        <h1>{article.title}</h1>
-        <img style={imgStyle} src={article.urlToImage} alt="" />
-        <h2>{article.description}</h2>
-        <a href={article.url} target="_blank">READ MORE</a>
+let NewsItem = ({ data }) => (
+  data ?
+  
+    <data style={dataStyle} >
+      <h1>{data.name}</h1>
+      {data.username && <h2 style={errorMessage}>{data.error}</h2>}
+      {data.title && <div>
+        <h1>{data.username}</h1>
+        <img style={imgStyle} src={data.urlToImage} alt="" />
+        <h2>{data.username}</h2>
+        <a href={data.url} target="_blank">READ MORE</a>
       </div>}
-    </article> :
-    null
+    </data> :
+    "hi"
 );
 
 const mapStateToProps = (state) => ({
-  article: state.news,
+  data: state.news,
 })
 
 NewsItem = connect(
